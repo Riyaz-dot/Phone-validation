@@ -5,10 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PostListComponent } from "./post-list/post-list.component";
 import { HeroComponent } from "./hero/hero.component";
+import { SignupComponent } from './signup/signup.component';
+import { PhoneFieldComponent } from './phone-field/phone-field.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, PhoneComponent, FormsModule, CommonModule, PostListComponent, HeroComponent, ],
+  imports: [RouterOutlet, FormsModule, CommonModule,PhoneFieldComponent, PostListComponent, HeroComponent, PhoneComponent, SignupComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

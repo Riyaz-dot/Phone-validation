@@ -1,41 +1,20 @@
 <div class="container">
-  <h1>Phone Number Utility</h1>
-
-  <!-- Phone Number Input -->
+  <h1>Phone Number Validation</h1>
   <div class="form-group">
     <label for="phoneNumber">Phone Number:</label>
     <input type="text" id="phoneNumber" [(ngModel)]="phoneNumber" class="form-control" placeholder="Enter phone number">
   </div>
-
-  <!-- Region Input -->
   <div class="form-group">
-    <label for="region">Region:</label>
-    <input type="text" id="region" [(ngModel)]="region" class="form-control" placeholder="Enter region (e.g., US)">
+    <label for="region">Region Code:</label>
+    <input type="text" id="region" [(ngModel)]="regionCode" class="form-control" placeholder="Enter region code (e.g., US)">
   </div>
-
-  <!-- Action Buttons -->
-  <div class="button-group">
-    <button (click)="formatPhoneNumber()" class="btn btn-primary">Format Phone Number</button>
-    <button (click)="validatePhoneNumber()" class="btn btn-secondary">Validate Phone Number</button>
-    <button (click)="getRegionCode()" class="btn btn-info">Get Region Code</button>
-  </div>
-  
-  <!-- All Checks Button -->
-  <div class="button-group">
-    <button (click)="runAllChecks()" class="btn btn-success">Run All Checks</button>
-  </div>
-
-  <!-- Validation Results Display -->
+  <button (click)="validateAndFormatPhoneNumber()" class="btn btn-primary">Validate & Format</button>
   <div class="results">
     <h2>Results:</h2>
     <p><strong>Formatted Number:</strong> {{ formattedNumber }}</p>
     <p><strong>Is Valid:</strong> {{ isValid }}</p>
-    <p><strong>Region Code:</strong> {{ regionCode }}</p>
-    
-    <!-- Additional Validation Checks -->
     <p><strong>Is Possible:</strong> {{ isPossible }}</p>
     <p><strong>Is Toll-Free:</strong> {{ isTollFree }}</p>
-    <p><strong>Is Mobile:</strong> {{ isMobile }}</p>
     <p><strong>Number Type:</strong> {{ numberType }}</p>
   </div>
 </div>

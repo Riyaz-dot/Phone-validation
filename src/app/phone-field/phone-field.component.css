@@ -1,0 +1,57 @@
+.phone-field-container {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+}
+
+.phone-field-header {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.phone-field-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.phone-field-form label {
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.phone-field-form input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.phone-field-form button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.phone-field-form button:hover {
+  background-color: #0cbb78;
+}
+
+.phone-field-error {
+  color: #e74c3c;
+  margin-top: 10px;
+}
+
+.phone-field-form p {
+  margin: 5px 0;
+}

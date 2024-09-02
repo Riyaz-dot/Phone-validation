@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { PhoneService } from '../phone.service';
-import { PhoneNumberFormat } from 'google-libphonenumber';
+import { PhoneNumberFormat, PhoneNumberType, PhoneNumberUtil } from 'google-libphonenumber';
 import { FormsModule} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -13,6 +13,9 @@ import { CommonModule } from '@angular/common';
   styleUrl: './phone.component.css'
 })
 
+
+
+
 export class PhoneComponent {
   phoneNumber: string = '';
   formattedNumber: string = '';
@@ -24,51 +27,42 @@ export class PhoneComponent {
   isTollFree: boolean = false;
   isMobile: boolean = false;
   numberType: string = '';
+  
 
   constructor(private phoneService: PhoneService) { }
 
-  formatPhoneNumber(): void {
-    if (this.phoneNumber && this.region) {
-      this.formattedNumber = this.phoneService.formatPhoneNumber(this.phoneNumber, this.region, PhoneNumberFormat.INTERNATIONAL);
-    } else {
-      this.formattedNumber = 'Invalid input';
-    }
-  }
+  private phoneUtil = PhoneNumberUtil.getInstance();
 
-  validatePhoneNumber(): void {
-    if (this.phoneNumber && this.region) {
-      this.isValid = this.phoneService.isValidPhoneNumber(this.phoneNumber, this.region);
-    } else {
+  validateAndFormatPhoneNumber() {
+    try {
+      const number = this.phoneUtil.parseAndKeepRawInput(this.phoneNumber, this.regionCode);
+      this.isValid = this.phoneUtil.isValidNumber(number);
+      this.isPossible = this.phoneUtil.isPossibleNumber(number);
+      this.isTollFree = this.phoneUtil.getNumberType(number) === PhoneNumberType.TOLL_FREE;
+      this.formattedNumber = this.phoneUtil.format(number, PhoneNumberFormat.INTERNATIONAL);
+      this.numberType = this.getNumberTypeDescription(this.phoneUtil.getNumberType(number));
+    } catch (error) {
+      console.error('Error parsing or validating number:', error);
       this.isValid = false;
+      this.formattedNumber = '';
+      this.isTollFree = false;
+      this.numberType = 'Invalid';
     }
   }
 
-  validatePhoneNumbers() {
-    this.isPossible = this.phoneService.isPossibleNumber(this.phoneNumber, this.region);
-    this.isTollFree = this.phoneService.isTollFreeNumber(this.phoneNumber, this.region);
-    this.isMobile = this.phoneService.isMobileNumber(this.phoneNumber, this.region);
-    this.numberType = this.phoneService.getNumberType(this.phoneNumber, this.region);
-  }
-
-  getRegionCode(): void {
-    if (this.phoneNumber && this.region) {
-      this.regionCode = this.phoneService.getRegionCodeForNumber(this.phoneNumber, this.region);
-    } else {
-      this.regionCode = 'Invalid input';
+  getNumberTypeDescription(type: PhoneNumberType): string {
+    switch (type) {
+      case PhoneNumberType.MOBILE:
+        return 'Mobile';
+      case PhoneNumberType.FIXED_LINE:
+        return 'Fixed Line';
+      case PhoneNumberType.TOLL_FREE:
+        return 'Toll-Free';
+      case PhoneNumberType.VOIP:
+        return 'VoIP';
+      case PhoneNumberType.UNKNOWN:
+      default:
+        return 'Unknown';
     }
-  }
- 
-
- 
-
-  runAllChecks() {
-    this.formatPhoneNumber();
-    this.validatePhoneNumber();
-    this.getRegionCode();
-
-    this.isPossible = this.phoneService.isPossibleNumber(this.phoneNumber, this.region);
-    this.isTollFree = this.phoneService.isTollFreeNumber(this.phoneNumber, this.region);
-    this.isMobile = this.phoneService.isMobileNumber(this.phoneNumber, this.region);
-    this.numberType = this.phoneService.getNumberType(this.phoneNumber, this.region);
   }
 }

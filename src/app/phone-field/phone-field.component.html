@@ -1,0 +1,24 @@
+<div class="phone-field-container">
+  <div class="phone-field-header">Phone Number Validation</div>
+  <form class="phone-field-form" (ngSubmit)="validatePhoneNumber()">
+    <label for="phoneNumber">Phone Number:</label>
+    <input
+      type="text"
+      id="phoneNumber"
+      [(ngModel)]="phoneNumber"
+      name="phoneNumber"
+      required
+    />
+    <button type="submit">Validate</button>
+    <div *ngIf="!isValidPhone && phoneNumber" class="phone-field-error">
+      Invalid phone number. Please enter a valid 10-digit number.
+    </div>
+    <div *ngIf="isValidPhone && formattedNumber">
+      <p><strong>Formatted Number:</strong> {{ formattedNumber }}</p>
+      <p><strong>Is Valid:</strong> {{ isValidPhone }}</p>
+      <p><strong>Number Type:</strong> {{ numberType }}</p>
+      <p><strong>Is Possible:</strong> {{ isPossible }}</p>
+      <p><strong>Is Toll Free:</strong> {{ isTollFree }}</p>
+    </div>
+  </form>
+</div>

@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
-import { PhoneNumberUtil, PhoneNumberFormat, PhoneNumberType } from 'google-libphonenumber';
+import { PhoneNumberUtil, PhoneNumberFormat, PhoneNumberType,  } from 'google-libphonenumber';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PhoneService {
+  getNumberType(phoneNumber: string, region: string): string {
+    throw new Error('Method not implemented.');
+  }
   formatNumber(phoneNumber: string, region: string): string {
     throw new Error('Method not implemented.');
   }
@@ -45,8 +48,8 @@ export class PhoneService {
     }
   }
 
-   // Check if the number is possible
-   isPossibleNumber(phoneNumber: string, region: string): boolean {
+  // Check if the number is possible
+  isPossibleNumber(phoneNumber: string, region: string): boolean {
     try {
       const number = this.phoneUtil.parseAndKeepRawInput(phoneNumber, region);
       return this.phoneUtil.isPossibleNumber(number);
@@ -69,29 +72,16 @@ export class PhoneService {
   }
 
   // Check if the number is a mobile number
- 
-
-
-isMobileNumber(phoneNumber: string, region: string): boolean {
-  try {
-    const number = this.phoneUtil.parseAndKeepRawInput(phoneNumber, region);
-    const numberType = this.phoneUtil.getNumberType(number);
-    console.log('Number Type:', numberType);  // Debugging output
-    return numberType === PhoneNumberType.MOBILE;
-  } catch (error) {
-    console.error('Error parsing number:', error);
-    return false;
-  }
-}
-
-  // Get the number type
-  getNumberType(phoneNumber: string, region: string): string {
+  isMobileNumber(phoneNumber: string, region: string): boolean {
     try {
       const number = this.phoneUtil.parseAndKeepRawInput(phoneNumber, region);
-      return libphonenumber.PhoneNumberType[this.phoneUtil.getNumberType(number)];
+      const numberType = this.phoneUtil.getNumberType(number);
+      console.log('Number Type:', numberType);  // Debugging output
+      return numberType === PhoneNumberType.MOBILE;
     } catch (error) {
-      console.error('Error parsing phone number:', error);
-      return 'UNKNOWN';
+      console.error('Error parsing number:', error);
+      return false;
     }
   }
+
 }
